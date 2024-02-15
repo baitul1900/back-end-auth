@@ -1,5 +1,5 @@
 const { decode } = require('jsonwebtoken');
-const {decodeToken, decodeToken} = require('../helpers/jwtAuth');
+const {decodeToken} = require('../helpers/jwtAuth');
 
 
 module.exports = async (req, res, next)=> {

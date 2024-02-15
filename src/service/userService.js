@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const { encodeToken } = require("../helpers/jwtAuth");
 const userModel = require('../models/userModel');
 
 
@@ -17,6 +18,32 @@ const userProfileCreate = async (req) => {
 }
 
 
+
+const loginUserService = async (req) => {
+    try {
+        const { email, password } = req.body;
+
+        // Find user by email
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        // Compare passwords
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            throw new Error('Invalid password');
+        }
+
+        // Generate token
+        const token = encodeToken(user.email, user._id);
+        return { status: "success", message: "User logged in", token };
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
-    userProfileCreate
+    userProfileCreate,
+    loginUserService
 }
