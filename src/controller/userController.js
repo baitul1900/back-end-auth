@@ -1,4 +1,4 @@
-const {userProfileCreate, loginUserService} = require('../service/userService');
+const {userProfileCreate,verifyOtpService, loginUserService, readProfileService, updateUserService, recoverAccountService} = require('../service/userService');
 
 
 exports.userRegistration = async (req, res) => {
@@ -27,3 +27,33 @@ exports.userLoginController = async (req, res)=> {
         return res.status(500).json({status: "fail", messages: "something went wrong"})
     }
 }
+
+exports.profileDetails = async (req, res)=> {
+    try {
+        let result = await readProfileService(req);
+        if (result.status === "success") {
+            return res.status(200).json(result);
+        } else {
+            return res.status(404).json(result); // Return 404 if user profile not found
+        }
+    }
+    catch (e) {
+        return res.status(500).json({status: "fail", messages: "something went wrong"})
+    }
+};
+
+
+exports.updateProfile = async (req, res)=> {
+    let result = await updateUserService(req);
+    return res.status(200).json(result);
+}
+
+exports.accountRecoverController = async (req, res)=> {
+    let result = await recoverAccountService(req);
+    return res.status(200).json(result);
+}
+
+exports.verifyOtpController = async (req, res)=> {
+    let result = await verifyOtpService(req);
+    return res.status(200).json(result);
+}; 

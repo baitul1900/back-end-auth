@@ -15,6 +15,7 @@ app.use(cors())
 app.use(helmet())
 app.use(mongoSanitize())
 app.use(hpp())
+app.use(cookieParser());
 
 // Middleware to parse JSON data with a size limit of 50mb
 app.use(express.json({ limit: '50mb' }));
