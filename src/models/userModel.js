@@ -17,14 +17,20 @@ const userData = new Schema({
     phone: {
         type: String,
         required: true,
-        maxlength: 11
+        validate: {
+            validator: function(v) {
+                return /^\+88\s\d{5}\s\d{2}\s\d{2}\s\d{2}$/.test(v);
+            },
+            message: props => `${props.value} is not a valid Bangladeshi phone number`
+        }
     },
     password: {
         type: String,
         required: true
     },
     image : {
-        type: String
+        type: String,
+        default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
     }
 
 

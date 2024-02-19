@@ -3,21 +3,39 @@ const { encodeToken } = require("../helpers/jwtAuth");
 const userModel = require('../models/userModel');
 const SendEmailUtility = require('../utility/SendEmailUtility');
 const OTPModels = require('../models/OTPMode');
+const {generateOtp, sendOtp} = require('../utility/OtpUtility');
 
 
 const userProfileCreate = async (req) => {
     try {
-        let password = await bcrypt.hash(req.body.password, 10);
-        let reqBody = req.body;
-        reqBody.password = password;
-        await userModel.create(reqBody);
-        return {status: "success", messages: "user created"}
-    }
+        // Hash the password
+        const password = await bcrypt.hash(req.body.password, 10);
+        
+        // Extract user details from the request body
+        const { name, email, phone } = req.body;
 
-    catch (e) {
-        return {status: "fail", messages: "something went wrong"}
+        // Generate OTP
+        const otp = generateOtp();
+
+        // Create user in the database
+        await userModel.create({ name, email, phone, password });
+
+        // Send OTP to the user's email
+        await sendOtp(email, otp);
+
+        // Save OTP to the OTP model
+        await OTPModels.create({ email, otp });
+
+        // Return success response
+        return { status: "success", message: "Otp code sent for verification" };
+    } catch (e) {
+        // Handle errors
+        console.error("Error in userProfileCreate:", e);
+        return { status: "fail", message: "Something went wrong" };
     }
 }
+
+
 
 
 
@@ -60,20 +78,40 @@ const readProfileService = async (req)=> {
     }
 }
 
-const updateUserService = async (req)=> {
-    try {
-        let email = req.headers['email'];
-        let reqBody = req.body;
 
-        reqBody.email = email;
-        
-        await userModel.updateOne({email: email}, {$set: reqBody}, {upsert:true})
-        return {status: "success", message: "profile Updated"}
+
+const updateUserService = async (req) => {
+    try {
+        const { password, image } = req.body;
+        const email = req.headers['email'];
+
+        if (!password && !image) {
+            // No fields to update
+            return { status: "fail", message: "No fields to update" };
+        }
+
+        const updateFields = {};
+        if (password) {
+            // Validate and hash the new password
+            const hashedPassword = await bcrypt.hash(password, 10);
+            updateFields.password = hashedPassword;
+        }
+        if (image) {
+            updateFields.image = image;
+        }
+
+        // Update the user document
+        await userModel.updateOne({ email }, { $set: updateFields }, { upsert: true });
+
+        return { status: "success", message: "Profile updated" };
+    } catch (error) {
+        console.error("Error in updateUserService:", error);
+        return { status: "fail", message: "Something went wrong in service" };
     }
-    catch (e) {
-        return {status:"fail",message:'something went wrong'}
-    }
-}
+};
+
+module.exports = updateUserService;
+
 
 
 const recoverAccountService = async (req) => {
