@@ -7,6 +7,15 @@ const authVerify = require('../middlewares/authVerification');
 // all imports about user 
 const userController = require('../controller/userController');
 
+// all brand controller 
+const brandController = require('../controller/brandController');
+
+// category controller
+const categoryController = require('../controller/categoryController');
+
+// product controller 
+const productController = require("../controller/productController");
+
 
 // user registration routes
 router.post('/user-registration', userController.userRegistration);
@@ -15,6 +24,51 @@ router.get('/profile', authVerify, userController.profileDetails);
 router.post('/updateProfile', authVerify, userController.updateProfile);
 router.get('/account-recover/:email', userController.accountRecoverController);
 router.get('/verify-otp/:email/:otp', userController.verifyOtpController);
+
+// brand routes
+router.post('/create-brand', authVerify, brandController.createBrand);
+router.get('/brandList', authVerify, brandController.brandListController);
+router.post('/brand/:id', authVerify, brandController.updateBrandController);
+router.get('/deleteBrand/:id', authVerify, brandController.deleteBrandController);
+
+
+// category routes
+router.post('/create-category', authVerify, categoryController.createCategory);
+router.get('/category', authVerify, categoryController.categoryListController);
+router.post('/category-update/:id', authVerify, categoryController.updatecategory);
+router.get('/category-delete/:id', authVerify, categoryController.deleteCategoryController);
+
+
+
+// product controller 
+router.post('/create-product', authVerify, productController.createProduct);
+router.get('/product', authVerify, productController.productList);
+router.get('/product-brand/:brandID', authVerify, productController.productByBrand);
+router.get('/product-category/:categoryID', authVerify, productController.productListByCategory);
+router.get('/product-by-keyword/:Keyword', authVerify, productController.productByKeyword);
+router.post('/products/:productId', authVerify, productController.updateProduct);
+router.delete('/products/:productId', authVerify, productController.deleteProduct);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

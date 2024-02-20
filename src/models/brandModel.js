@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const brandData = mongoose.Schema({
     brandName: {type : String, required : true, unique:true},
-    brandImg : {type : String, required : true}
+des: {type : String, default: "no description"},
 },
 
 {timestamps: true, versionKey : false}

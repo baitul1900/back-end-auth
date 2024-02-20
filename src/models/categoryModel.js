@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const categoryData = mongoose.Schema({
     categoryName: {type : String, required : true, unique:true},
-    categoryImg : {type : String, required : true}
+    des : {type : String, default: "no description"},
 },
 
 {timestamps: true, versionKey : false}
