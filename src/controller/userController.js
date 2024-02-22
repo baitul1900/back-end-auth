@@ -4,7 +4,7 @@ const {userProfileCreate,verifyOtpService, loginUserService, readProfileService,
 exports.userRegistration = async (req, res) => {
     try {
         let resBody = await userProfileCreate(req);
-        return res.status(200).json(resBody);
+    return res.status(200).json(resBody);
     }
     catch (e) {
         return res.status(500).json({status: "fail", messages: "something went wrong"})
@@ -55,5 +55,5 @@ exports.accountRecoverController = async (req, res)=> {
 
 exports.verifyOtpController = async (req, res)=> {
     let result = await verifyOtpService(req);
-    return res.status(200).json(result);
+    return res.status(200).json({status: "success", data: result});
 }; 

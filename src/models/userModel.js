@@ -17,12 +17,7 @@ const userData = new Schema({
     phone: {
         type: String,
         required: true,
-        validate: {
-            validator: function(v) {
-                return /^\+88\s\d{5}\s\d{2}\s\d{2}\s\d{2}$/.test(v);
-            },
-            message: props => `${props.value} is not a valid Bangladeshi phone number`
-        }
+        unique: true
     },
     password: {
         type: String,
