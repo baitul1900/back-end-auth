@@ -30,15 +30,6 @@ const limiter = rateLimit({ windowMs: 15 * 60 * 60, max: 4000 })
 app.use(limiter)
 
 
-
-// connect to database
-// mongoose.connect(process.env.MONGO_URI)
-//     .then(() => {console.log("DB Connected")})
-//     .catch((err) => console.log(err));
-
-// const routeFiles = readdirSync('./src/routes');
-// readdirSync("./src/routes").map(r => app.use("/api/v1", require(`./src/routes/${r}`)))
-
 let URI = "mongodb+srv://baitulamin1900:baitulamin1900@cluster0.fdqtlzq.mongodb.net/authapp"
 let OPTION = {user : "baitulamin1900", pass : 'baitulamin1900', autoIndex : true};
 

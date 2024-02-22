@@ -111,7 +111,6 @@ const updateUserService = async (req) => {
     }
 };
 
-module.exports = updateUserService;
 
 
 

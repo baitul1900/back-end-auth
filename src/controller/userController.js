@@ -28,6 +28,7 @@ exports.userLoginController = async (req, res) => {
 
 
 
+
 exports.profileDetails = async (req, res)=> {
     try {
         let result = await readProfileService(req);
