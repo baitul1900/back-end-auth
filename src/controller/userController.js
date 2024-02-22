@@ -11,22 +11,22 @@ exports.userRegistration = async (req, res) => {
     }
 }
 
-exports.userLoginController = async (req, res)=> {
+exports.userLoginController = async (req, res) => {
     try {
         let result = await loginUserService(req);
-        if(result['status']=== "success") {
-            let cookieOption={expires:new Date(Date.now()+24*6060*1000), httpOnly:false}
-    
-            res.cookie('token',result['token'],cookieOption)
-            return res.status(200).json(result)
-        }
-        
-    }
+        if (result['status'] === "success") {
+            let cookieOption = { expires: new Date(Date.now() + 24 * 6060 * 1000), httpOnly: false };
 
-    catch (e) {
-        return res.status(500).json({status: "fail", messages: "something went wrong"})
+            res.cookie('token', result['token'], cookieOption);
+            return res.status(200).json(result);
+        }
+    } catch (e) {
+        console.error('Error in userLoginController:', e); // Add this line to log errors
+        return res.status(500).json({ status: "fail", message: "something went wrong" });
     }
-}
+};
+
+
 
 exports.profileDetails = async (req, res)=> {
     try {

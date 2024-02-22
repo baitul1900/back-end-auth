@@ -59,6 +59,7 @@ const loginUserService = async (req) => {
         const token = encodeToken(user.email, user._id);
         return { status: "success", message: "User logged in", token };
     } catch (error) {
+        console.error('Error in loginUserService:', error); // Add this line to log errors
         throw error;
     }
 };
