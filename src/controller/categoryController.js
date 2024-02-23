@@ -52,3 +52,18 @@ exports.deleteCategoryController = async (req, res)=> {
         return res.status(500).json({status: "fail", messages: "something went wrong"})
     }
 }
+
+
+exports.getCategoryById = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const category = await categoryModel.findById(id);
+      if (!category) {
+        return res.status(404).json({ status: 'fail', message: 'category not found' });
+      }
+      return res.status(200).json({ status: 'success', data: category });
+    } catch (error) {
+      console.error('Error fetching category by ID:', error);
+      return res.status(500).json({ status: 'error', message: 'Internal server error' });
+    }
+  };

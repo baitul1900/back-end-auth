@@ -30,6 +30,7 @@ router.post('/create-brand', authVerify, brandController.createBrand);
 router.get('/brandList', authVerify, brandController.brandListController);
 router.post('/brand/:id', authVerify, brandController.updateBrandController);
 router.get('/deleteBrand/:id', authVerify, brandController.deleteBrandController);
+router.get('/getbrand/:id', authVerify, brandController.getBrandById);
 
 
 // category routes
@@ -37,6 +38,7 @@ router.post('/create-category', authVerify, categoryController.createCategory);
 router.get('/category', authVerify, categoryController.categoryListController);
 router.post('/category-update/:id', authVerify, categoryController.updatecategory);
 router.get('/category-delete/:id', authVerify, categoryController.deleteCategoryController);
+router.get('/getByCategory/:id', authVerify, categoryController.getCategoryById);
 
 
 
