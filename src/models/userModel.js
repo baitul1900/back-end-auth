@@ -1,5 +1,4 @@
-
-
+const cloudinary = require('../../config/cloudinary');
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
@@ -26,7 +25,8 @@ const userData = new Schema({
     image : {
         type: String,
         default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-    }
+    },
+    cloudinary_public_id: String 
 
 
 }, {versionKey : false, timestamps: true})

@@ -8,6 +8,7 @@ exports.userRegistration = async (req, res) => {
     }
     catch (e) {
         return res.status(500).json({status: "fail", messages: "something went wrong"})
+        console.error('Error in userRegistration:', e);
     }
 }
 
